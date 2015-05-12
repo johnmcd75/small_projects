@@ -1,0 +1,104 @@
+<?php
+session_start();
+class Challenge_Model extends CI_Model{
+
+
+public function get_car_price($data){
+
+		var_dump($_POST);
+		$array_size = count($data);//checks size of the $data coming in
+		var_dump($array_size);
+		if (isset($_POST["color"])) { $color = $_POST["color"]; } else { $color = ''; }
+		$x= 1;
+		for ($x = 1 ; $x<= $array_size; $x++){		
+		
+			if (isset($_POST[$x])) { $acc[$x] = $_POST[$x]; } //gives variable acc1, acc2, etc based on the size of $data
+			//var_dump($_POST[$x]);
+		}
+
+		return array($acc);//returns the array to the view
+	}
+
+public function modify_json_data(){
+		if ($_POST["color"]===''){ $color = "blue"; } elseif(isset($_POST["color"])){$color = $_POST["color"];}
+		if ($_POST["accessory"]===''){ $acc1 ="fog-lights"; } elseif(isset($_POST["accessory"])){$acc1 = $_POST["accessory"];}
+		var_dump($color);
+
+		if (isset($color) && isset($acc1)){
+			$result = $this->db->query("SELECT * FROM colors WHERE colors LIKE ? ", $color)->row_array();
+			$result2 = $this->db->query("SELECT * FROM accessories WHERE accessory LIKE ? ", $acc1)->row_array();
+			if (isset($result) && isset($result2)){//if there are results, send user back to original page
+				header("Location: " . "../../../challenge");
+			}elseif (isset($result) && !isset($result2)){//if there is no accessory matching in database, it adds it to database
+				$data2 = array("accessory"=>$acc1);
+				$this->db->insert("accessories", $data2);
+
+				$host 		= 'localhost';
+				$dbname 	= 'mydb';
+				$username 	= 'root';
+				$password 	= '';
+
+				$pdo_object = new PDO("mysql:host=$host;dbname=$dbname", $username, $password); //pdo format is easier
+
+				$array = $pdo_object->query("SELECT accessory FROM accessories")->fetchAll(PDO::FETCH_ASSOC);//again pdo is easier
+				$accessory_json= json_encode($array);//encode the array into json format
+
+				$prepend = "{ \"accessory\" :";//next few lines rewrite the json accessory file
+				$append = "}";
+
+				echo json_encode($array);
+
+				$file = "accessories.json";
+				
+				file_put_contents($file, $accessory_json);//makes accessory file
+				$fileContents = file_get_contents($file);
+				file_put_contents($file, $prepend . $fileContents);//prepends the json file to get into format I need
+				file_put_contents($file, $append, FILE_APPEND);//appends the file with new info
+				
+				header("Location: " . "../../../challenge");
+			}elseif (!isset($result) && isset($result2)){
+				$data = array("colors"=>$color);//colors 
+				$this->db->insert("colors", $data);//inserts color into DB
+				$host 		= 'localhost';
+				$dbname 	= 'mydb';
+				$username 	= 'root';
+				$password 	= '';
+
+				$pdo_object2 = new PDO("mysql:host=$host;dbname=$dbname", $username, $password); 
+
+				$array = $pdo_object2->query("SELECT colors FROM colors")->fetchAll(PDO::FETCH_ASSOC);
+				$color_json= json_encode($array);
+
+				$prepend2 = "{ \"color\" :";//prepends the json file to get it into format I can use
+				$append2 = "}";
+
+				$file2 = "colors.json";
+				
+				file_put_contents($file2, $color_json);//puts 
+				$fileContents2 = file_get_contents($file2);
+				file_put_contents($file2, $prepend2 . $fileContents2);
+				file_put_contents($file2, $append2, FILE_APPEND);
+				
+				header("Location: " . "../../../challenge");
+			}else{
+				$data2 = array("accessory"=>$acc1);
+				$this->db->insert("accessories", $data2);
+				$data = array("colors"=>$color);
+				$this->db->insert("colors", $data);
+				$file = "accessories.json";
+				$json_string = '{'.json_encode($_POST["accessory"], JSON_PRETTY_PRINT) . ': "accessory"  }';
+				file_put_contents($file, $json_string, FILE_APPEND);
+				$file = "colors.json";
+				$json_string = '{'. json_encode($_POST["color"], JSON_PRETTY_PRINT) . ': "color" }';
+				file_put_contents($file, $json_string, FILE_APPEND);
+					//this series of lines adds both the color and new accessory because it didn't find any existing in the DB
+				header("Location: " . "../../../challenge");
+			}
+				
+
+			
+		}
+
+		
+	}
+}
