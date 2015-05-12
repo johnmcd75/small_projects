@@ -1,0 +1,19 @@
+<html lang = "en">
+	<link rel="stylesheet" href="http://localhost/JCIrev3/css/main.css" title="Main Stylesheet" type="text/css" media="screen" charset="utf-8">
+	<script type="text/javascript" src="../jquery-1.11.2.js"></script>
+	<script type="text/javascript" src="../../../jquery-1.11.2.js"></script>
+	<script src = "http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<head>
+	<title>modify json file</title>
+<header><h2>Please add a new color or accessory to the JSON file</h2></header>
+	<h3>This will update the json file and list of user choices</h3>
+<body>
+
+	<form action="http://localhost/challenge/index.php/challenge_controller/modify_json_data" method = "post">
+		<div id="ihb"><br>
+			<input id = "high" type = "text" name= "color" placeholder="Enter new color option "><br><br>
+			<input id = "high" type = "text" name= "accessory" placeholder="Enter new accessory"><br><br>
+			<input type="submit" value="submit"/>
+		</div>
+	</form>
+</body>
