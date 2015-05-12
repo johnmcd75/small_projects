@@ -1,0 +1,27 @@
+<?php
+
+class Challenge_Controller extends CI_Controller{
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('challenge_model');
+
+	}
+
+	public function index(){
+		$this->load->view('modify_database_view');
+		//$this->load->view('test_view2');
+	}
+	public function json_data_form(){
+		$this->load->model('challenge_model');
+		$result = $this->challenge_model->get_car_price($_POST);
+		$this->load->view('json_view',$result);
+		//$this->load->view('test');
+	}
+
+	public function modify_json_data(){
+		$this->load->view('modify_database_view');
+		$this->load->model('challenge_model');
+		$this->challenge_model->modify_json_data();
+
+	}
+}
