@@ -1,0 +1,141 @@
+<html lang = "en">
+<style>
+ 	#ihb {
+    display: none;
+	}
+	#link2 {
+    display: none;
+	}
+	#ihb3 {
+    display: none;
+	}
+	#plate {
+    display: none;
+	}
+	#noplate {
+    display: none;
+	}
+
+
+</style>
+	<link rel="stylesheet" href="http://localhost/JCIrev3/css/main.css" title="Main Stylesheet" type="text/css" media="screen" charset="utf-8">
+
+
+
+</head>
+<body>
+	<script type="text/javascript" src="../../jquery-1.11.2.js"></script>
+	<script type="text/javascript" src="../../../jquery-1.11.2.js"></script>
+	<script src = "http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+
+        $("document").ready(function () {
+            // create some new content
+            $('#shb').click(function() {
+        	$('#ihb').show(250, "swing");
+        	//$( this ).slideUp();
+
+        	});
+        	$('#shb2').click(function() {
+        	$('#link2').show(250, "swing");
+        	});
+
+        	$('#shb3').click(function() {
+        	$('#plate').show(250, "swing");
+        	$('#noplate').show(250, "swing");
+        	});
+
+        	$('#shb4').click(function() {
+        	$('#noplate').show(250, "swing");
+        	});
+        });
+</script>
+<h2>Car Order Form</h2>
+<div id = "formContainer">
+<form id ="color" method ="post" action ="http://localhost/challenge/index.php/challenge_controller/json_data_form">
+	<div><input type="button" value="Choose Car Color" id="shb2" required id = "shb2"></div><br>
+
+	<div id = "link2">
+
+		<select id = "link" name= "color" required id= "link">
+		
+		</select>
+
+	</div><br>
+
+	<div><input type="button" value="Choose Car Accessories" id="shb" name = "accessory"></div><br>
+
+	<div id = "ihb">
+
+	</div><br>
+
+	<div>Would you like a vanity plate?</div>
+	    <input type = "button" value = "YES" id = "shb3">    <input type = "button" value = "NO" id = "shb4"><br>
+	<div >
+	<div id = "plate">Please Put 7 character plate here:<br>
+
+		<input id= "plate1" type = "text" name = "plate" maxlength = "7" minlength = "7" placeholder = "place 7 char. plate here"></div><br>
+	</div>
+</div>
+	<div id ="noplate"><input type = "submit" value = "Submit Order Form"/>
+	</div>
+</form>
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+$(document).ready(function() {
+
+	$.getJSON('../../colors.json', function(info){
+
+			var output='';
+			for (var i = 0; i <= info.color.length-1; i++) {		
+				for (key in info.color[i]) {
+					if (info.color[i].hasOwnProperty(key)) {
+						output += 
+						'<option value =' +info.color[i][key]+'>'+info.color[i][key]+'</option>';
+
+			    }   
+				}		
+			}
+			
+			var update = document.getElementById('link');
+			update.innerHTML = output;
+
+	}); //getJSON
+
+}); // ready
+</script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+$(document).ready(function() {
+
+	$.getJSON('../../accessories.json', function(info){
+
+			var output='';
+			for (var i = 0; i <= info.accessory.length-1; i++) {		
+				for (key in info.accessory[i]) {
+					if (info.accessory[i].hasOwnProperty(key)) {
+						output += 
+						'<input type = \"checkbox\" name = ' +[i]+' value = ' + info.accessory[i][key]+'>'+info.accessory[i][key];
+			    }   		
+				}
+			}
+			
+			var update = document.getElementById('ihb');
+			update.innerHTML = output;
+
+	}); //getJSON
+
+}); // ready
+</script>
+<script>
+	$(document).ready(function(){
+		$("#color").validate();
+	});
+</script>
+
+
+</body>
+</html>
+<form>
