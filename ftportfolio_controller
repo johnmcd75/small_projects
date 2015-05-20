@@ -1,0 +1,20 @@
+<?php
+
+class FTPortfolio_Controller extends CI_Controller{
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('ftport_model');
+
+	}
+
+	public function index(){
+		$this->load->view('ftport_view');
+		//$this->load->view('test_view2');
+	}
+	public function rstat(){
+		//$this->load->view('ftport_view');
+		$this->load->model('ftport_model');
+		$data ['query'] = $this->ftport_model->get_table();
+		$this->load->view('ftport_view2', $data);
+	}
+}
