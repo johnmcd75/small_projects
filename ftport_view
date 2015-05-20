@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+	body#one {
+	text-align: left;
+	background-color: #fbfbfb;
+	background-image: url('star-wars-cap-33.jpg');
+	background-size: cover;
+	font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	padding: 8px 0 20px;
+}
+</style>
+<head>
+	<meta charset="utf-8" />
+	<title>FTPortfolio Search</title>
+	<link rel="stylesheet" href="ftstyle.css" />
+</head>
+<body id = "one">
+<div id="searcharea">
+	<label for="search">live search</label>
+	<p>Enter the symbol of name of an FTPortfolio Fund</p>
+	<input type="search" name="search" id="search" placeholder="name or info" />
+</div>
+<div id="update"></div>
+<script src="../jquery.js"></script>
+<script src="../ftscript.js"></script>
+</body>
+
+</html>
