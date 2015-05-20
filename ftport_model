@@ -1,0 +1,21 @@
+<?php
+session_start();
+class FTPort_Model extends CI_Model{
+
+	public function get_table(){
+		$ticker = $_POST['ticker'];
+		$query = $this->db->query("SHOW TABLES LIKE '$ticker'")->row_array();
+		
+		if ($query){
+			$_SESSION["ticker_error"]= null;
+			$query = $this->db->get($ticker);
+			return $query->result() ;
+						
+		}else{
+			$_SESSION["ticker_error"]= "No such ticker exits";
+			header("Location: " . "../../../ftportfolio");
+			}
+	}
+
+}
+		
