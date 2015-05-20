@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+
+<style>
+	body {
+	text-align: center;
+	background-color: #fbfbfb;
+	background-image: url('../../star-wars-cap-33.jpg');
+	background-size: cover;
+	font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	padding: 8px 0 20px;
+}
+input#buttons1 {
+	background-color: #9999FF;
+	padding: 8px 10px;
+	min-width: 100px;
+	max-width: 125px;
+	border: none;
+	border-bottom: 3px solid #000052;
+	color: #fbfbfb;
+	font-size: 1.0em;
+	font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	border-radius: 5px;
+}
+div#formContainer2 {
+	padding: 10px 10px;
+	text-align: left;
+	background-color: #DAD7C7;
+	min-width: 35%;
+	max-width: 60%;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	display: inline-block;
+	border-radius: 5px;
+	
+}
+h3#h3 {
+	font-family: "Satisfy", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-size: 2.5em;
+	color: #534741;
+}
+</style>
+
+
+<header><h3 id = "h3">Table for FTPortfolio</h3></header>
+<body>	
+<div id = "formContainer2">
+<tbody>
+	<table id = "table" border=".2" style="width:100%" ;>
+	 
+<?php foreach($query as $row): ?>
+<tr> 
+
+    <td text align: >	<?php echo $row->Name; ?>		</td>
+    <td>	<?php echo $row->Symbol; ?>		</td>
+    <td>	<?php echo $row->Weighting; ?>	</td>
+
+    </tr>
+    <?php endforeach; ?>
+
+
+</table>
+</tbody>
+</div>
+<br>
+<br>
+<form action="http://localhost/ftportfolio">
+	<input id = "buttons1" type="submit" value="Back to Search">
+</form><br>
+
+<?php 
+//$a = exec('Rscript C:/wamp/www/ftportfolio.R 2>&1');
+//print "$a\n";?>
+</body>
