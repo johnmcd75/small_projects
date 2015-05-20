@@ -1,0 +1,23 @@
+$('#search').keyup(function() {
+	var searchField = $('#search').val();
+	var myExp = new RegExp(searchField, "i");
+	$.getJSON('ftportfolio.json', function(data) {
+		var output = '<ul class="searchresults">';
+		$.each(data, function(key, val) {
+			if ((val.name.search(myExp) != -1) ||
+			(val.ticker.search(myExp) != -1)) {
+				output += '<form method = "post" action = "ftportfolio_controller/rstat"';
+				output += '<li>';
+				output += '<h2>'+ val.name +'</h2>';
+				
+				output += '<input type = "submit" id = "button1" name = "'+ val.ticker +'" value ="' + val.ticker +'">';
+				
+				output += '</li>';
+				output += '</form>';
+			}
+		});
+		output += '</ul>';
+		$('#update').html(output);
+	}); //get JSON
+});
+
